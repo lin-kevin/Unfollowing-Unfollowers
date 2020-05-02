@@ -1,21 +1,28 @@
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from account import user, pw
 import requests 
 
 class InstaBot(object):
 
-    # method copied from https://github.com/aj-4/ig-followers/blob/master/main.py
+    # method modified from https://github.com/aj-4/ig-followers/blob/master/main.py
+    # this version automatically uses the correct Chrome version
     def __init__(self, username, pw):
         # sets up a basic Instagram bot by logging in for user 
         self.username = username
         self.pw = pw
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.get("https://instagram.com")
         sleep(2)
+
+        # removed due to Instagram browser update
+        """
         self.driver.find_element_by_xpath(
             "/html/body/div[1]/section/main/article/div[2]/div[2]/p/a").click()
         sleep(2)
+        """
+        
         self.driver.find_element_by_xpath(
             "//input[@name=\"username\"]").send_keys(self.username)
         self.driver.find_element_by_xpath(
